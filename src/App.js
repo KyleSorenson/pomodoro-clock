@@ -2,21 +2,27 @@ import { useEffect, useState } from 'react';
 import { act } from 'react-dom/cjs/react-dom-test-utils.production.min';
 import './App.scss';
 
-function Clock (props) {
+const Clock = (props) => {
   return (
     <div id="time-left" className="clock__countdown">{props.display}</div>
   );
 }
 
-function App() {
+const App = () => {
   
-  const [sessionLength, setSessionLength] = useState(25);
-  const [breakLength, setBreakLength] = useState(5);
-  const [timeRemaining, setTimeRemaining] = useState(25*60);
+  const defaultSessionTime = 25;
+  const defaultBreakTime = 5;
+
+  const [sessionLength, setSessionLength] = useState(defaultSessionTime);
+  const [breakLength, setBreakLength] = useState(defaultBreakTime);
+  const [currentTimer, setCurrentTimer] = useState('session');
+  const [timeRemaining, setTimeRemaining] = useState(defaultSessionTime * 60);
+  const [timerIsRunning, setTimerIsRunning] = useState(false);
   
   const stepUp = init => ++init;
   const stepDown = init => init > 0 ? --init : 0;
 
+  // Handles session and break steppers
   const handleStep = (counter, stepDirection, e) => {
 
     let currentValue = null;
@@ -39,12 +45,38 @@ function App() {
     return `${m}:${s}`
   }
 
+  const handleTimer = (action, e) => {
+    
+    switch (action) {
+      
+      case 'playToggle':
+        setTimerIsRunning(!timerIsRunning);
+        break;
+
+      case 'reset':
+        setTimeRemaining(sessionLength * 60);
+        break;
+
+      default:
+        break;
+
+    }
+  }
+  
+  // Triggers countdown
   useEffect(() => {
-    let timer = setInterval(()=> {
-      setTimeRemaining(stepDown(timeRemaining))
-    }, 1000);
-    return () => clearInterval(timer);
-  },[timeRemaining]);
+    if (timerIsRunning) {
+      let timer = setInterval(()=> {
+        setTimeRemaining(stepDown(timeRemaining))
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  },[timeRemaining, timerIsRunning]);
+
+  // Sets timer based on session or break length
+  useEffect(() => {
+    setTimeRemaining(sessionLength * 60)
+  },[sessionLength])
   
   return (
     <div className="App">
@@ -55,9 +87,9 @@ function App() {
         </header>
         <main className="main-body">
           <div className="clock">
-            <div id="timer-label" className="clock__label">Session</div>
+            <div id="timer-label" className="clock__label">{currentTimer[0].toUpperCase()+currentTimer.slice(1)}</div>
             <Clock display={formatForTimer(timeRemaining)}/>
-            <div id="reset" className="clock__reset"><span className="material-icons">refresh</span></div>
+            <button id="reset" className="clock__reset" onClick={handleTimer.bind(this, 'reset')}><span className="material-icons">refresh</span></button>
           </div>
           <div className="settings">
             <div className="settings__list-item">
@@ -79,7 +111,13 @@ function App() {
           </div>
         </main>
         <footer className="bottom-fab">
-          <div id="start_stop" className="fab"><span className="material-icons">play_arrow</span><span className="material-icons">play_circle</span><span className="material-icons">pause</span></div>
+          <div id="start_stop" className="fab">
+            <button className="fab__play" onClick={handleTimer.bind(this, 'playToggle')}>
+              {timerIsRunning ? <span className="material-icons">pause</span>: <span className="material-icons">play_arrow</span>}
+            </button>
+            {/* <span className="material-icons">play_circle</span>
+            <span className="material-icons">pause</span> */}
+          </div>
         </footer>
       </div>
     </div>
