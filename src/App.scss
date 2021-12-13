@@ -1,0 +1,60 @@
+$primary-500: #607D8B;
+$primary-900: #263238;
+
+$secondary-300: #FF8A65;
+$secondary-500: #FF5722;
+
+$on-primary: white;
+$on-secondary: white;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $primary-900;
+  color: $on-primary;
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main-body {
+  display: flex;
+}
+
+.clock, .settings {
+  width: 360px;
+  height: 640px;
+  border: 1px solid red;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  &__list-item {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__stepper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__countdown {
+    font-size: 60px;
+    font-weight: 600;
+  }
+
+}
+
+.clock__reset, .stepper__incrementer, .stepper__decrementer, .fab {
+  color: $secondary-300;
+}
