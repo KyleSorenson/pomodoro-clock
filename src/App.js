@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { act } from 'react-dom/cjs/react-dom-test-utils.production.min';
 import './App.scss';
 
+//Figure out how to transition from one timer to the next
+
 const Clock = (props) => {
   return (
     <div id="time-left" className="clock__countdown">{props.display}</div>
@@ -18,32 +20,64 @@ const App = () => {
   const [currentTimer, setCurrentTimer] = useState('session');
   const [timeRemaining, setTimeRemaining] = useState(defaultSessionTime * 60);
   const [timerIsRunning, setTimerIsRunning] = useState(false);
-  
-  const stepUp = init => ++init;
-  const stepDown = init => init > 0 ? --init : 0;
 
+  
+  
+  
+  
   // Handles session and break steppers
   const handleStep = (counter, stepDirection, e) => {
-
+    
     let currentValue = null;
     let setValue = () => {};
     let stepAction = () => {};
     
+    const stepUp = init => ++init;
+    const stepDown = init => --init;
+
     if (counter === 'session') { currentValue = sessionLength; setValue = setSessionLength; };
     if (counter === 'break') { currentValue = breakLength; setValue = setBreakLength; };
     if (stepDirection === 'up') { stepAction = stepUp };
     if (stepDirection === 'down') { stepAction = stepDown };
   
+    currentValue = currentValue < 2 ? 2 : currentValue;
+    currentValue = currentValue > 59 ? 59 : currentValue;
+
     setValue( stepAction(currentValue) );
-  
   }
+
 
   const formatForTimer = (seconds) => {
     let s = seconds % 60;
     let m = Math.floor(seconds / 60);
     s = s < 10 ? '0' + s : s;
+    m = m < 10 ? '0' + m : m;
     return `${m}:${s}`
   }
+
+
+  // Sets timer based on session or break length
+  const resetCurrentTimer = (currentTimer) => {
+    switch (currentTimer) {
+      
+      case 'session':
+        setTimeRemaining(sessionLength * 60);
+        break;
+        
+      case 'break':
+        setTimeRemaining(breakLength * 60);
+        break;
+          
+      default:
+        break;
+    } 
+  }
+
+
+  useEffect(() => {
+    resetCurrentTimer(currentTimer)    
+  },[sessionLength, breakLength])
+        
 
   const handleTimer = (action, e) => {
     
@@ -54,30 +88,42 @@ const App = () => {
         break;
 
       case 'reset':
-        setTimeRemaining(sessionLength * 60);
+        setCurrentTimer('session');
+        resetCurrentTimer(currentTimer);
+        setTimerIsRunning(false);
+        setSessionLength(defaultSessionTime);
+        setBreakLength(defaultBreakTime);
         break;
 
       default:
         break;
-
     }
   }
+
   
   // Triggers countdown
   useEffect(() => {
+
     if (timerIsRunning) {
+
       let timer = setInterval(()=> {
-        setTimeRemaining(stepDown(timeRemaining))
+
+        if ( timeRemaining > 0 ) {
+          setTimeRemaining(timeRemaining - 1)
+        }
+        
       }, 1000);
-      return () => clearInterval(timer);
+
+      return () => { 
+
+        clearInterval(timer);
+        
+      };
     }
+
   },[timeRemaining, timerIsRunning]);
 
-  // Sets timer based on session or break length
-  useEffect(() => {
-    setTimeRemaining(sessionLength * 60)
-  },[sessionLength])
-  
+
   return (
     <div className="App">
       <div className="mobile-container">
