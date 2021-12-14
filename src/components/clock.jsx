@@ -2,10 +2,17 @@ import { useEffect, useState } from 'react';
 
 import './clock.scss';
 
-export function Clock(props) {
+export function Clock({ timer, start, isRunning, handleReset, resetId, toggleTimer }) {
 
-  const defaultValue = props.start * 60;
-  const [timeRemaining, setTimeRemaining] = useState(defaultValue);
+  const defaultValue = start * 60;
+  const tick = 1000;
+  const [timeRemaining, setTimeRemaining] = useState(0);
+
+  // Initialize timer on pageload, when start changes, or the clock is reset
+  useEffect(()=> {
+    setTimeRemaining(defaultValue);
+  },[start, resetId])
+
 
   const formatForTimer = (seconds) => {
     let s = seconds % 60;
@@ -17,13 +24,16 @@ export function Clock(props) {
 
 
   const countdownTimer = () => {
-    if (props.isRunning) {
+    if (isRunning) {
 
       let timer = setInterval(()=> {
         if ( timeRemaining > 0 ) {
-          setTimeRemaining(timeRemaining - 1)
-        }    
-      }, 1000);
+          setTimeRemaining(timeRemaining - 1);
+        } else if ( timeRemaining === 0 ) {
+          // setTimeRemaining(timeRemaining - 1);
+          toggleTimer();
+        }
+      }, tick);
 
       return () => { 
         clearInterval(timer);
@@ -33,18 +43,18 @@ export function Clock(props) {
   }
 
 
-  useEffect(countdownTimer,[timeRemaining, props.isRunning]);
+  useEffect(countdownTimer,[timeRemaining, isRunning]);
 
 
   return (
     <div className="clock">
       <div id="timer-label" className="clock__label">
-        {props.timer[0].toUpperCase()+props.timer.slice(1)}
+        {timer[0].toUpperCase()+timer.slice(1)}
       </div>
       <div id="time-left" className="clock__countdown">
         {formatForTimer(timeRemaining)}
       </div>
-      <button id="reset" className="clock__reset" onClick={()=>{}}>
+      <button id="reset" className="clock__reset" onClick={handleReset}>
         <span className="material-icons">refresh</span>
       </button>
     </div>

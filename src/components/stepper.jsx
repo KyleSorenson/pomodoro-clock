@@ -1,27 +1,27 @@
 import './stepper.scss';
 
-export function Stepper(props) {
+export function Stepper({ timer, length, handleIncrement, handleDecrement }) {
 
   return (
     <div className="settings__list-item">
-      <div id="session-label" className="settings__list-title">
-        {props.timer + ' length'}
+      <div id={`${timer}-label`} className="settings__list-title">
+        {timer + ' length'}
       </div>
       <div className="settings__stepper">
         <button 
-          id={`"${props.timer}-decrement"`} 
+          id={`${timer}-decrement`} 
           className='stepper__decrementer' 
-          onClick={props.handleDecrement}
+          onClick={handleDecrement}
         >
           <span className="material-icons">remove_circle_outline</span>
         </button>
-        <div id={`"${props.timer}-length"`} className='stepper__number'>
-          {props.length}
+        <div id={`${timer}-length`} className='stepper__number'>
+          {length}
         </div>
         <button 
-          id={`"${props.timer}-increment"`} 
+          id={`${timer}-increment`} 
           className='stepper__incrementer' 
-          onClick={props.handleIncrement}
+          onClick={handleIncrement}
         >
           <span className="material-icons">add_circle_outline</span>
         </button>

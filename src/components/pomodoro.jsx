@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import './pomodoro.scss';
 
@@ -13,15 +13,27 @@ export function PomodoroApp(props) {
   const defaultSessionTime = 25;
   const defaultBreakTime = 5;
 
+  const [resetId, setResetId] = useState(0);
+  const [currentTimer, setCurrentTimer] = useState('session');
+  const [timerIsRunning, setTimerIsRunning] = useState(false);
   const [sessionLength, setSessionLength] = useState(defaultSessionTime);
   const [breakLength, setBreakLength] = useState(defaultBreakTime);
-  const [currentTimer, setCurrentTimer] = useState('session');
-  // const [timeRemaining, setTimeRemaining] = useState(defaultSessionTime * 60);
-  const [timerIsRunning, setTimerIsRunning] = useState(false);
 
+  const reInitialize = () => {
+    setResetId(resetId + 1);
+    setCurrentTimer('session');
+    setTimerIsRunning(false);
+    setSessionLength(defaultSessionTime);
+    setBreakLength(defaultBreakTime)
+  }
+
+  const toggleTimer = () => {
+    setResetId(resetId + 1);
+    setCurrentTimer(currentTimer === 'session' ? 'break' : 'session');
+  }
 
   // Stepper Operations
-  const handleStep = (timer, stepDirection, e) => {
+  const handleStep = ( timer, stepDirection ) => {
   
     let currentValue = null;
     let setValue = () => {};
@@ -55,12 +67,16 @@ export function PomodoroApp(props) {
 
           <Clock 
             timer={currentTimer}
-            start={sessionLength} 
-            // start={currentTimer === 'session' ? sessionLength : breakLength }
+            start={currentTimer === 'session' ? sessionLength : breakLength }
             isRunning={timerIsRunning}
+            handleReset={reInitialize}
+            resetId={resetId}
+            toggleTimer={toggleTimer}
           />
 
           <div className="settings">
+
+          <button onClick={toggleTimer}>Toggle Timer</button>
 
             <Stepper
               timer={'session'} 

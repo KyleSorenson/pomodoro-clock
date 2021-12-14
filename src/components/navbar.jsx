@@ -1,9 +1,9 @@
 import './navbar.scss';
 
-export function NavBar(props) {
+export function NavBar({ children }) {
   return (
     <header className="tabs">
-      {props.children}
+      {children}
     </header>
   );
 }
