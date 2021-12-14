@@ -8,7 +8,7 @@ import { Clock } from './clock.jsx';
 import { Stepper } from './stepper.jsx';
 import { ActionBar } from './actionbar.jsx';
 
-import { Tab } from '@mui/material';
+import { Grid, Tab } from '@mui/material';
 import { WatchLater, Settings } from '@mui/icons-material';
 
 export function PomodoroApp(props) {

@@ -12,7 +12,7 @@ export function Stepper({ timer, length, handleIncrement, handleDecrement }) {
           <IconButton
             size="large"
             edge="start"
-            color="inherit"
+            color="secondary"
             id={`${timer}-decrement`} 
             className='stepper__decrementer' 
             onClick={handleDecrement}
@@ -25,7 +25,7 @@ export function Stepper({ timer, length, handleIncrement, handleDecrement }) {
           <IconButton
             size="large"
             edge="start"
-            color="inherit"
+            color="secondary"
             id={`${timer}-increment`} 
             className='stepper__incrementer' 
             onClick={handleIncrement}

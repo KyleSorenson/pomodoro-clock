@@ -60,7 +60,7 @@ export function Clock({ timer, start, isRunning, handleReset, resetId, toggleTim
       <IconButton
           size="large"
           edge="start"
-          color="inherit"
+          color="secondary"
           id="reset" 
           className="clock__reset" 
           onClick={handleReset}

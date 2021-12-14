@@ -6,7 +6,7 @@ export function ActionBar({ timerIsRunning, handleFabClick }) {
   return (
     <footer className="bottom-fab">
       <div id="start_stop" className="fab">
-        <Fab color="primary" aria-label="add" onClick={handleFabClick}>
+        <Fab color="secondary" aria-label="play" onClick={handleFabClick}>
           {timerIsRunning ? <Pause /> : <PlayArrow />}
         </Fab>
         {/* <button className="fab__play" onClick={handleFabClick}>
