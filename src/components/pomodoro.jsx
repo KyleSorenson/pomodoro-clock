@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 
 import './pomodoro.scss';
@@ -6,6 +7,9 @@ import { NavBar } from './navbar.jsx';
 import { Clock } from './clock.jsx';
 import { Stepper } from './stepper.jsx';
 import { ActionBar } from './actionbar.jsx';
+
+import { Tab } from '@mui/material';
+import { WatchLater, Settings } from '@mui/icons-material';
 
 export function PomodoroApp(props) {
 
@@ -59,8 +63,8 @@ export function PomodoroApp(props) {
       <div className="mobile-container">
 
         <NavBar>
-          <div className="tabs-clock"><span className="material-icons">watch_later</span></div>
-          <div className="tabs-settings"><span className="material-icons">settings</span></div>
+          <Tab icon={<WatchLater />} aria-label="phone" />
+          <Tab icon={<Settings />} aria-label="person" />
         </NavBar>
 
         <main className="main-body">

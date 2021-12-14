@@ -1,9 +1,18 @@
 import './navbar.scss';
 
+import { Toolbar, AppBar, Tabs } from '@mui/material';
+
 export function NavBar({ children }) {
   return (
-    <header className="tabs">
-      {children}
-    </header>
+    <AppBar position="static">
+      <Toolbar>
+        <Tabs>
+          {children}
+          {/* <header className="tabs">
+            {children}
+          </header> */}
+        </Tabs>
+      </Toolbar>
+    </AppBar>
   );
 }

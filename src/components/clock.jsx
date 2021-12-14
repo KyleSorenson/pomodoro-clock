@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 
 import './clock.scss';
 
+import { IconButton } from '@mui/material';
+import { Refresh } from '@mui/icons-material';
+
 export function Clock({ timer, start, isRunning, handleReset, resetId, toggleTimer }) {
 
   const defaultValue = start * 60;
@@ -54,9 +57,19 @@ export function Clock({ timer, start, isRunning, handleReset, resetId, toggleTim
       <div id="time-left" className="clock__countdown">
         {formatForTimer(timeRemaining)}
       </div>
-      <button id="reset" className="clock__reset" onClick={handleReset}>
+      <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          id="reset" 
+          className="clock__reset" 
+          onClick={handleReset}
+        >
+          <Refresh />
+        </IconButton>
+      {/* <button id="reset" className="clock__reset" onClick={handleReset}>
         <span className="material-icons">refresh</span>
-      </button>
+      </button> */}
     </div>
   );
 }
