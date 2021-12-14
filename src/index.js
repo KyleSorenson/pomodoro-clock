@@ -6,12 +6,14 @@ import './index.css';
 import { ThemeProvider } from '@mui/material';
 import myTheme from './themes/myTheme';
 
-import { PomodoroApp } from './components/pomodoro.jsx';
+// import { PomodoroApp } from './components/pomodoro.jsx';
+import { PomodoroSkeleton } from './components/pomodoroskeleton.jsx'
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={myTheme}>
-      <PomodoroApp />
+      <PomodoroSkeleton />
+      {/* <PomodoroApp /> */}
     </ThemeProvider>
     {/* <App /> */}
   </React.StrictMode>,

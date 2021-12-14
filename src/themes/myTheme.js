@@ -1,18 +1,21 @@
 import { createTheme } from "@mui/material";
-import { dark } from "@mui/material/styles/createPalette";
+import { blueGrey, deepOrange } from "@mui/material/colors";
 
 const myTheme = createTheme({
   palette: {
-    type: 'dark',
-    primary: {
-      main: '#607D8B',
-      dark: '#263238'
+    mode: 'dark',
+    primary: blueGrey,
+    secondary: deepOrange,
+  },
+  typography: {
+    h2: {
+      fontSize: '5rem',
     },
-    secondary: {
-      light: '#FF8A65',
-      main: '#FF5722'
-    }
-  }
+    h4: {
+      fontWeight: '200',
+    },
+  },
 });
+
 
 export default myTheme;
