@@ -42,7 +42,6 @@ export function PomodoroApp(props) {
     setValue( stepAction(currentValue) );
   }
 
-
   return (
     <div className="App">
       <div className="mobile-container">
@@ -55,12 +54,10 @@ export function PomodoroApp(props) {
         <main className="main-body">
 
           <Clock 
-            timer={currentTimer} 
-            start={currentTimer === 'session' ? sessionLength : breakLength }
+            timer={currentTimer}
+            start={sessionLength} 
+            // start={currentTimer === 'session' ? sessionLength : breakLength }
             isRunning={timerIsRunning}
-            // timeRemaining={timeRemaining} // move this into component?
-            // setTimeRemaining={setTimeRemaining}
-            // handleReset={handleTimer.bind(this, 'reset')}
           />
 
           <div className="settings">

@@ -35,6 +35,7 @@ export function Clock(props) {
 
   useEffect(countdownTimer,[timeRemaining, props.isRunning]);
 
+
   return (
     <div className="clock">
       <div id="timer-label" className="clock__label">
