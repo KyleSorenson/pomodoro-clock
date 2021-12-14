@@ -1,5 +1,5 @@
 import './actionbar.scss';
-import { AppBar, Box, Fab, Toolbar } from '@mui/material';
+import { AppBar, Box, Toolbar } from '@mui/material';
 
 
 export function ActionBar({ children, timerIsRunning, handleFabClick }) {

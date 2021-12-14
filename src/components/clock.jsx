@@ -3,7 +3,7 @@ import './clock.scss';
 import { Card, Typography } from '@mui/material';
 
 
-export function Clock({ timer, start, isRunning, handleReset, resetId, toggleTimer }) {
+export function Clock({ timer, start, isRunning, resetId, toggleTimer }) {
 
   const defaultValue = start * 60;
   const tick = 1000;
@@ -12,7 +12,7 @@ export function Clock({ timer, start, isRunning, handleReset, resetId, toggleTim
   // Initialize timer on pageload, when start changes, or the clock is reset
   useEffect(()=> {
     setTimeRemaining(defaultValue);
-  },[start, resetId])
+  },[start, resetId, defaultValue])
 
 
   const formatForTimer = (seconds) => {
