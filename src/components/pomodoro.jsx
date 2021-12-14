@@ -24,7 +24,7 @@ import {
 
 } from "@mui/icons-material"
 
-import { NavBar } from './navbar';
+// import { NavBar } from './navbar';
 import { Clock } from './clock';
 import { Stepper } from './stepper';
 import { ActionBar } from './actionbar';
