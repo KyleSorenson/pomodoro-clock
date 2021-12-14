@@ -1,17 +1,35 @@
+import { useState } from "react";
 
-import { useState } from 'react';
+import { 
 
-import './pomodoro.scss';
+  Box,
+  Card,
+  Container,
+  CssBaseline,
+  Divider,
+  Fab,
+  List,
+  Stack,
+  Tab,
 
-import { NavBar } from './navbar.jsx';
-import { Clock } from './clock.jsx';
-import { Stepper } from './stepper.jsx';
-import { ActionBar } from './actionbar.jsx';
+} from "@mui/material";
 
-import { Grid, Tab } from '@mui/material';
-import { WatchLater, Settings } from '@mui/icons-material';
+import {
 
-export function PomodoroApp(props) {
+  PlayArrow,
+  Pause,
+  Refresh,
+  Settings,
+  WatchLater,
+
+} from "@mui/icons-material"
+
+import { NavBar } from './navbar';
+import { Clock } from './clock';
+import { Stepper } from './stepper';
+import { ActionBar } from './actionbar';
+
+export function PomodoroClock() {
 
   // Intitialization
   const defaultSessionTime = 25;
@@ -59,52 +77,72 @@ export function PomodoroApp(props) {
   }
 
   return (
-    <div className="App">
-      <div className="mobile-container">
+    <>
+      <CssBaseline />
 
-        <NavBar>
-          <Tab icon={<WatchLater />} aria-label="phone" />
-          <Tab icon={<Settings />} aria-label="person" />
-        </NavBar>
+      {/* <NavBar>
+        <Tab icon={<WatchLater />} sx={{ height: '64px', flexGrow: '1' }} />
+        <Tab icon={<Settings />} sx={{ height: '64px', flexGrow: '1' }} />
+      </NavBar> */}
+      
+      <main>
+        <Box
+          sx={{
+            pt: 8,
+            pb: 6,
+          }}
+        >
+          <Container maxWidth='sm'>
 
-        <main className="main-body">
+            <Stack spacing={2} divider={<Divider />}>
 
-          <Clock 
-            timer={currentTimer}
-            start={currentTimer === 'session' ? sessionLength : breakLength }
-            isRunning={timerIsRunning}
-            handleReset={reInitialize}
-            resetId={resetId}
-            toggleTimer={toggleTimer}
-          />
+              <Clock 
+                timer={currentTimer}
+                start={currentTimer === 'session' ? sessionLength : breakLength }
+                isRunning={timerIsRunning}
+                handleReset={reInitialize}
+                resetId={resetId}
+                toggleTimer={toggleTimer}
+              />
 
-          <div className="settings">
+              <Card 
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
+                <List sx={{ width: '100%' }}>
 
-          <button onClick={toggleTimer}>Toggle Timer</button>
+                  <Stepper
+                    timer={'session'} 
+                    length={sessionLength} 
+                    handleIncrement={handleStep.bind(this, 'session', 'up')} 
+                    handleDecrement={handleStep.bind(this, 'session', 'down')} 
+                  />
+                  <Divider />
+                  <Stepper
+                    timer={'break'} 
+                    length={breakLength} 
+                    handleIncrement={handleStep.bind(this, 'break', 'up')} 
+                    handleDecrement={handleStep.bind(this, 'break', 'down')} 
+                  />
 
-            <Stepper
-              timer={'session'} 
-              length={sessionLength} 
-              handleIncrement={handleStep.bind(this, 'session', 'up')} 
-              handleDecrement={handleStep.bind(this, 'session', 'down')} 
-            />
-            <Stepper
-              timer={'break'} 
-              length={breakLength} 
-              handleIncrement={handleStep.bind(this, 'break', 'up')} 
-              handleDecrement={handleStep.bind(this, 'break', 'down')} 
-            />
-
-          </div>
-
-        </main>
-
-        <ActionBar 
-          timerIsRunning={timerIsRunning}
-          handleFabClick={ () => { setTimerIsRunning(!timerIsRunning) } }
-        />
-
-      </div>
-    </div>
-  );
+                </List>
+              </Card>
+            </Stack>            
+          </Container>
+        </Box>
+      </main>
+      
+      <ActionBar>
+        <Fab color='secondary' sx={{ margin: '0 6px'}} id="start_stop" onClick={() => { setTimerIsRunning(!timerIsRunning)}}>
+          {timerIsRunning ? <Pause /> : <PlayArrow />}
+        </Fab>
+        <Fab color='primary' sx={{ margin: '0 6px'}} id="reset" onClick={reInitialize}>
+          <Refresh />
+        </Fab>
+      </ActionBar>
+    </>
+  )
 }

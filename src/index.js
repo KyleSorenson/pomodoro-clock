@@ -1,21 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
 
 import { ThemeProvider } from '@mui/material';
 import myTheme from './themes/myTheme';
 
-// import { PomodoroApp } from './components/pomodoro.jsx';
-import { PomodoroSkeleton } from './components/pomodoroskeleton.jsx'
+import { PomodoroClock } from './components/pomodoro.jsx'
 
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={myTheme}>
-      <PomodoroSkeleton />
-      {/* <PomodoroApp /> */}
+      <PomodoroClock />
     </ThemeProvider>
-    {/* <App /> */}
   </React.StrictMode>,
   document.getElementById('root')
 );

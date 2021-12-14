@@ -1,11 +1,6 @@
 import { useState } from 'react';
-
 import './navbar.scss';
-
 import { AppBar, Container, Tab, Tabs, Toolbar } from '@mui/material';
-import { Settings, WatchLater } from '@mui/icons-material';
-
-
 
 
 export function NavBar({ children }) {

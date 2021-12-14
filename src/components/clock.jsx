@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-
 import './clock.scss';
+import { Card, Typography } from '@mui/material';
 
-import { Box, Card, Typography } from '@mui/material';
 
 export function Clock({ timer, start, isRunning, handleReset, resetId, toggleTimer }) {
 
@@ -49,27 +48,6 @@ export function Clock({ timer, start, isRunning, handleReset, resetId, toggleTim
 
 
   return (
-    // <div className="clock">
-    //   <div id="timer-label" className="clock__label">
-    //     {timer[0].toUpperCase()+timer.slice(1)}
-    //   </div>
-    //   <div id="time-left" className="clock__countdown">
-    //     {formatForTimer(timeRemaining)}
-    //   </div>
-    //   <IconButton
-    //       size="large"
-    //       edge="start"
-    //       color="secondary"
-    //       id="reset" 
-    //       className="clock__reset" 
-    //       onClick={handleReset}
-    //     >
-    //       <Refresh />
-    //     </IconButton>
-    //   {/* <button id="reset" className="clock__reset" onClick={handleReset}>
-    //     <span className="material-icons">refresh</span>
-    //   </button> */}
-    // </div>
     <Card 
       sx={{
         display: 'flex',
