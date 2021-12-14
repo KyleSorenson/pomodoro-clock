@@ -26,6 +26,7 @@ import {
 
   AddCircleOutline,
   PlayArrow,
+  Pause,
   Refresh,
   RemoveCircleOutline,
   Settings,
@@ -33,37 +34,66 @@ import {
 
 } from "@mui/icons-material"
 
-const StyledFab = styled(Fab)({
-  position: 'absolute',
-  zIndex: 1,
-  top: -30,
-  left: 0,
-  right: 0,
-  margin: '0 auto',
-});
+import { NavBar } from './navbar';
+import { Clock } from './clock';
+import { Stepper } from './stepper';
+import { ActionBar } from './actionbar';
 
 export function PomodoroSkeleton(props) {
 
-  const [value, setValue] = useState(0);
+  // Intitialization
+  const defaultSessionTime = 25;
+  const defaultBreakTime = 5;
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const [resetId, setResetId] = useState(0);
+  const [currentTimer, setCurrentTimer] = useState('session');
+  const [timerIsRunning, setTimerIsRunning] = useState(false);
+  const [sessionLength, setSessionLength] = useState(defaultSessionTime);
+  const [breakLength, setBreakLength] = useState(defaultBreakTime);
+
+  const reInitialize = () => {
+    setResetId(resetId + 1);
+    setCurrentTimer('session');
+    setTimerIsRunning(false);
+    setSessionLength(defaultSessionTime);
+    setBreakLength(defaultBreakTime)
+  }
+
+  const toggleTimer = () => {
+    setResetId(resetId + 1);
+    setCurrentTimer(currentTimer === 'session' ? 'break' : 'session');
+  }
+
+  // Stepper Operations
+  const handleStep = ( timer, stepDirection ) => {
   
+    let currentValue = null;
+    let setValue = () => {};
+    let stepAction = () => {};
+    
+    const stepUp = init => ++init;
+    const stepDown = init => --init;
+
+    if (timer === 'session') { currentValue = sessionLength; setValue = setSessionLength; };
+    if (timer === 'break') { currentValue = breakLength; setValue = setBreakLength; };
+    if (stepDirection === 'up') { stepAction = stepUp; };
+    if (stepDirection === 'down') { stepAction = stepDown; };
+  
+    // Sets Max and Min Values
+    currentValue = currentValue < 2 ? 2 : currentValue;
+    currentValue = currentValue > 59 ? 59 : currentValue;
+
+    setValue( stepAction(currentValue) );
+  }
+
   return (
     <>
       <CssBaseline />
 
-      <AppBar position='relative'>
-        <Container maxWidth='sm'>
-            <Toolbar sx={{ maxWidth: 'sm' }} disableGutters="true">
-              <Tabs value={value} onChange={handleChange} sx={{ width: '100%', p: 0 }}>
-                <Tab icon={<WatchLater />} sx={{ height: '64px', flexGrow: '1' }} />
-                <Tab icon={<Settings />} sx={{ height: '64px', flexGrow: '1' }} />
-              </Tabs>
-            </Toolbar>
-        </Container>
-      </AppBar>
+      <NavBar>
+        <Tab icon={<WatchLater />} sx={{ height: '64px', flexGrow: '1' }} />
+        <Tab icon={<Settings />} sx={{ height: '64px', flexGrow: '1' }} />
+      </NavBar>
       
       <main>
         <Box
@@ -75,8 +105,17 @@ export function PomodoroSkeleton(props) {
           <Container maxWidth='sm'>
 
             <Stack spacing={2} divider={<Divider />}>
+
+              <Clock 
+                timer={currentTimer}
+                start={currentTimer === 'session' ? sessionLength : breakLength }
+                isRunning={timerIsRunning}
+                handleReset={reInitialize}
+                resetId={resetId}
+                toggleTimer={toggleTimer}
+              />
     
-              <Card 
+              {/* <Card 
                 sx={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -84,9 +123,9 @@ export function PomodoroSkeleton(props) {
                   padding: '4rem 0'
                 }}
               >
-                <Typography variant='h4'>Session</Typography>
-                <Typography variant='h2'>25:00</Typography>
-              </Card>
+                <Typography variant='h4' id="timer-label">Session</Typography>
+                <Typography variant='h2' id="time-left">25:00</Typography>
+              </Card> */}
 
               <Card 
                 sx={{
@@ -96,59 +135,74 @@ export function PomodoroSkeleton(props) {
                 }}
               >
                 <List sx={{ width: '100%' }}>
-                <ListItem
-                  secondaryAction={
-                    <Stack direction="row">
-                      <IconButton
-                        size="large"
-                        color="secondary"
-                      >
-                        <RemoveCircleOutline />
-                      </IconButton>
-                      <div style={{ padding: '12px 0'}}>
-                        25
-                      </div>
-                      <IconButton
-                        size="large"
-                        color="secondary"
-                      >
-                        <AddCircleOutline />
-                      </IconButton>
-                    </Stack>
-                  }
-                >
-                  <ListItemText
-                    primary={'Session Length'}
-                  />
-                </ListItem>
+                  {/* <ListItem
+                    secondaryAction={
+                      <Stack direction="row">
+                        <IconButton
+                          size="large"
+                          color="secondary"
+                          id="__SESSION__-increment"
+                        >
+                          <RemoveCircleOutline />
+                        </IconButton>
+                        <div style={{ padding: '12px 0'}} id="__SESSION__-label">
+                          25
+                        </div>
+                        <IconButton
+                          size="large"
+                          color="secondary"
+                          id="__SESSION__-decrement"
+                        >
+                          <AddCircleOutline />
+                        </IconButton>
+                      </Stack>
+                    }
+                  >
+                    <ListItemText
+                      primary={'Session Length'}
+                      id="__SESSION__-label"
+                    />
+                  </ListItem> */}
 
-                <Divider />
-
-                <ListItem
-                  secondaryAction={
-                    <Stack direction="row">
-                      <IconButton
-                        size="large"
-                        color="secondary"
-                      >
-                        <RemoveCircleOutline />
-                      </IconButton>
-                      <div style={{ padding: '12px 0'}}>
-                        25
-                      </div>
-                      <IconButton
-                        size="large"
-                        color="secondary"
-                      >
-                        <AddCircleOutline />
-                      </IconButton>
-                    </Stack>
-                  }
-                >
-                  <ListItemText
-                    primary={'Break Length'}
+                  <Stepper
+                    timer={'session'} 
+                    length={sessionLength} 
+                    handleIncrement={handleStep.bind(this, 'session', 'up')} 
+                    handleDecrement={handleStep.bind(this, 'session', 'down')} 
                   />
-                </ListItem>
+                  <Divider />
+                  <Stepper
+                    timer={'break'} 
+                    length={breakLength} 
+                    handleIncrement={handleStep.bind(this, 'break', 'up')} 
+                    handleDecrement={handleStep.bind(this, 'break', 'down')} 
+                  />
+
+                  {/* <ListItem
+                    secondaryAction={
+                      <Stack direction="row">
+                        <IconButton
+                          size="large"
+                          color="secondary"
+                        >
+                          <RemoveCircleOutline />
+                        </IconButton>
+                        <div style={{ padding: '12px 0'}}>
+                          25
+                        </div>
+                        <IconButton
+                          size="large"
+                          color="secondary"
+                        >
+                          <AddCircleOutline />
+                        </IconButton>
+                      </Stack>
+                    }
+                  >
+                    <ListItemText
+                      primary={'Break Length'}
+                    />
+                  </ListItem> */}
                 </List>
 
               </Card>
@@ -158,12 +212,17 @@ export function PomodoroSkeleton(props) {
           </Container>
         </Box>
       </main>
-
-      <AppBar position='fixed' color='primary' sx={{ top: 'auto', bottom: 0 }}>
+      
+      <ActionBar>
+        <Fab color='secondary' sx={{ margin: '0 6px'}} id="start_stop" onClick={() => { setTimerIsRunning(!timerIsRunning)}}>
+          {timerIsRunning ? <Pause /> : <PlayArrow />}
+        </Fab>
+        <Fab color='primary' sx={{ margin: '0 6px'}} id="reset" onClick={reInitialize}>
+          <Refresh />
+        </Fab>
+      </ActionBar>
+      {/* <AppBar position='fixed' color='primary' sx={{ top: 'auto', bottom: 0 }}>
         <Toolbar>
-          {/* <StyledFab color='secondary'>
-            <PlayArrow />
-          </StyledFab> */}
           <Box sx={{ 
             width: '136px',
             position: 'absolute',
@@ -173,22 +232,15 @@ export function PomodoroSkeleton(props) {
             right: 0,
             margin: '0 auto',
           }}>
-            <Fab color='secondary' sx={{ margin: '0 6px'}}>
+            <Fab color='secondary' sx={{ margin: '0 6px'}} id="start_stop">
               <PlayArrow />
             </Fab>
-            <Fab color='primary' sx={{ margin: '0 6px'}}>
+            <Fab color='primary' sx={{ margin: '0 6px'}} id="reset">
               <Refresh />
             </Fab>
           </Box>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
     </>
   )
 }
-
-// position: 'absolute',
-// zIndex: 1,
-// top: -30,
-// left: 0,
-// right: 0,
-// margin: '0 auto',

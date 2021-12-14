@@ -1,18 +1,30 @@
+import { useState } from 'react';
+
 import './navbar.scss';
 
-import { Toolbar, AppBar, Tabs } from '@mui/material';
+import { AppBar, Container, Tab, Tabs, Toolbar } from '@mui/material';
+import { Settings, WatchLater } from '@mui/icons-material';
+
+
+
 
 export function NavBar({ children }) {
+
+  const [value, setValue] = useState(0);
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Tabs>
-          {children}
-          {/* <header className="tabs">
-            {children}
-          </header> */}
-        </Tabs>
-      </Toolbar>
-    </AppBar>
+    <AppBar position='relative'>
+    <Container maxWidth='sm'>
+        <Toolbar sx={{ maxWidth: 'sm' }} disableGutters="true">
+          <Tabs value={value} onChange={handleChange} sx={{ width: '100%', p: 0 }}>
+            { children }
+          </Tabs>
+        </Toolbar>
+    </Container>
+  </AppBar>
   );
 }
