@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './clock.scss';
+
 import { Card, Typography } from '@mui/material';
 
 
