@@ -6,4 +6,6 @@
 
 ### Features To Implement
 
-* Material UI
+* Audio
+* Manual Input for Steppers
+* Layout For Larger Screens
