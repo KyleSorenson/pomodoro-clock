@@ -6,6 +6,6 @@
 
 ### Features To Implement
 
-* Audio
+* ~~Audio~~
+* ~~Layout For Larger Screens~~
 * Manual Input for Steppers
-* Layout For Larger Screens
