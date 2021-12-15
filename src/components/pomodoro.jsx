@@ -41,7 +41,7 @@ export function PomodoroClock() {
 
   // Intitialization
   const defaultSessionTime = 25;
-  const defaultBreakTime = 55;
+  const defaultBreakTime = 5;
 
   const [resetId, setResetId] = useState(0);
   const [currentTimer, setCurrentTimer] = useState('session');
