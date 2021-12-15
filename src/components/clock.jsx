@@ -3,7 +3,7 @@ import './clock.scss';
 import { Card, Typography } from '@mui/material';
 
 
-export function Clock({ timer, start, isRunning, resetId, toggleTimer }) {
+export function Clock({ timer, start, isRunning, resetId, toggleTimer, playAlarm }) {
 
   const defaultValue = start * 60;
   const tick = 1000;
@@ -31,8 +31,8 @@ export function Clock({ timer, start, isRunning, resetId, toggleTimer }) {
         if ( timeRemaining > 0 ) {
           setTimeRemaining(timeRemaining - 1);
         } else if ( timeRemaining === 0 ) {
-          // setTimeRemaining(timeRemaining - 1);
           toggleTimer();
+          playAlarm();
         }
       }, tick);
 
@@ -44,7 +44,7 @@ export function Clock({ timer, start, isRunning, resetId, toggleTimer }) {
   }
 
 
-  useEffect(countdownTimer,[timeRemaining, isRunning, toggleTimer]);
+  useEffect(countdownTimer,[timeRemaining, isRunning, toggleTimer, playAlarm]);
 
 
   return (
