@@ -1,4 +1,3 @@
-import './actionbar.scss';
 import { AppBar, Box, Toolbar } from '@mui/material';
 
 

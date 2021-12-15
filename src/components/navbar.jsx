@@ -1,5 +1,3 @@
-// import { useState } from 'react';
-import './navbar.scss';
 import { AppBar, Container, IconButton, Toolbar, Typography } from '@mui/material';
 import { Info } from "@mui/icons-material"
 

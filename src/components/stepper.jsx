@@ -1,4 +1,3 @@
-import './stepper.scss';
 import { IconButton, ListItem, ListItemText, Stack } from '@mui/material';
 import { RemoveCircleOutline, AddCircleOutline } from '@mui/icons-material';
 

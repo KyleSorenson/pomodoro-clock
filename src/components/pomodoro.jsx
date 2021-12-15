@@ -14,8 +14,6 @@ import {
   Link,
   List,
   Stack,
-  // Typography,
-  // Tab,
 
 } from "@mui/material";
 
@@ -24,8 +22,6 @@ import {
   PlayArrow,
   Pause,
   Refresh,
-  // Settings,
-  // WatchLater,
 
 } from "@mui/icons-material"
 
@@ -125,10 +121,6 @@ export function PomodoroClock() {
             flexDirection: 'column',
             justifyContent: 'center',
           }}
-          // sx={{
-          //   pt: 8,
-          //   pb: 6,
-          // }}
         >
           <Container maxWidth='sm'>
 
@@ -195,6 +187,10 @@ export function PomodoroClock() {
             </p>
             <p>
               More information on the Pomodoro Technique <Link href="https://en.wikipedia.org/wiki/Pomodoro_Technique" color='secondary' target="_blank" rel="noopener">here</Link>.
+            </p>
+            <p>
+              Developed by Kyle Sorenson. <br />
+              Created using <Link href='https://reactjs.org/' color='secondary' target="_blank" rel="noopener">React</Link> and <Link href='https://mui.com' color='secondary' target="_blank" rel="noopener">Material UI</Link>
             </p>
           </DialogContentText>
         </DialogContent>
