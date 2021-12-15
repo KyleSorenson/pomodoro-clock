@@ -15,7 +15,7 @@ export function NavBar({ openDialog }) {
     <AppBar position='absolute'>
       <Container maxWidth='sm'>
         <Toolbar sx={{ maxWidth: 'sm', justifyContent: 'center' }} disableGutters="true">
-          <Typography variant='h6'>Pomodoro (25 + 1) Clock</Typography>
+          <Typography variant='h6'>Pomodoro (25 + 5) Clock</Typography>
           <IconButton
             size="large"
             onClick={openDialog}
